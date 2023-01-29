@@ -8,6 +8,7 @@
         Drama,
         Documentary,
         Thriller,
-        Horror
+        Horror,
+        Cartoon
     }
 }
