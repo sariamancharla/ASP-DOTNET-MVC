@@ -19,7 +19,7 @@ namespace eTickets.Data
 
                 //Cinema
                 if (!context.Cinemas.Any())
-                {
+                {                    
                     context.Cinemas.AddRange(new List<Cinema>()
                     {
                         new Cinema()
