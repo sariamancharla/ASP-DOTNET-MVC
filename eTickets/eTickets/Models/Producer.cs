@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using eTickets.Data.Base;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace eTickets.Models
 {
-    public class Producer
+    public class Producer:IEntityBase
+    //public class Producer
     {
         [Key]
         public int Id { get; set; }
