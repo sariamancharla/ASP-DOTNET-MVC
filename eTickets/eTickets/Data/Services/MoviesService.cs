@@ -17,8 +17,8 @@ namespace eTickets.Data.Services
         public async Task<Movie> GetMovieByIdAsync(int id)
         {
             var movieDetails = _context.Movies
-                .Include(c=>c.Cinema)
-                .Include(p => p.Cinema)
+                .Include(c => c.Cinema)
+                .Include(p => p.Producer)
                 .Include(am => am.Actor_Movies).ThenInclude(a => a.Actor)
                 .FirstOrDefaultAsync(n => n.Id == id);
 
