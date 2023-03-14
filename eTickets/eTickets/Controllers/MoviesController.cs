@@ -23,6 +23,18 @@ namespace eTickets.Controllers
             return View(allMovies);
         }
 
+        public async Task<IActionResult> Filter(string searchString)
+        {
+            var allMovies = await _service.GetAll(n => n.Cinema);
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                var filteredResult = allMovies.Where(n => n.Name.Contains(searchString) || n.Description.Contains(searchString)).ToList();
+                return View("Index", filteredResult);
+            }
+
+            return View("Index", allMovies);
+        }
         public async Task<IActionResult> Details(int id)
         {
             var movieDetail = await _service.GetMovieByIdAsync(id);
@@ -70,20 +82,21 @@ namespace eTickets.Controllers
                 Name = movieDetails.Name,
                 Description = movieDetails.Description,
                 Price = movieDetails.Price,
+                StartDate = movieDetails.StartDate,
+                EndDate = movieDetails.EndDate,
                 ImageURL = movieDetails.ImageURL,
+                MovieCategory = movieDetails.MovieCategory,
                 CinemaId = movieDetails.CinemaId,
                 ProducerId = movieDetails.ProducerId,
-                MovieCategory = movieDetails.MovieCategory,
-                Name = movieDetails.Name
+                ActorIds = movieDetails.Actor_Movies.Select(n => n.ActorId).ToList(),
+            };
 
-            }
 
-            
             var movieDropDownData = await _service.GetNewMovieDropDownValues();
             ViewBag.Cinemas = new SelectList(movieDropDownData.Cinemas, "Id", "Name");
             ViewBag.Producers = new SelectList(movieDropDownData.Producers, "Id", "FullName");
             ViewBag.Actors = new SelectList(movieDropDownData.Actors, "Id", "FullName");
-            return View();
+            return View(response);
         }
 
         [HttpPost]
